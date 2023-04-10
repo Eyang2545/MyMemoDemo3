@@ -2,7 +2,9 @@ package com.mymemo.demo.model;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.mymemo.demo.model.vo.UserVO;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
 
 import java.io.Serial;
@@ -11,6 +13,8 @@ import java.util.Date;
 
 @TableName(value = "user")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class User implements Serializable {
     /**
      * 主键

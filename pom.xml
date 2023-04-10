@@ -65,7 +65,7 @@
         </dependency>
         <dependency>
             <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-core</artifactId>
+            <artifactId>shiro-spring-boot-web-starter</artifactId>
             <version>1.9.0</version>
         </dependency>
         <dependency>
