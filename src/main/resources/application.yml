@@ -1,0 +1,17 @@
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/mymemodemo3
+    username: root
+    password:
+server:
+  port: 8080
+  servlet:
+    context-path: '/mymemo'
+    session:
+      cookie:
+        domain:
+
