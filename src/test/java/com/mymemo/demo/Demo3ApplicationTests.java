@@ -15,31 +15,13 @@ class Demo3ApplicationTests {
 
     @Autowired
     UserMapper userMapper;
-    @Test
-    public void findAll() {
-        List<User> list=userMapper.selectList(null);
-        for (User user : list) {
-            System.out.println(user);
-        }
-    }
-    @Test
-    public void add() {
-        User user = new User();
-        user.setUsername("Ohana");
-        user.setUserAccount("2545");
-        user.setAvatarUrl("kawayi");
-        user.setGender(3);
-        user.setUserPassword("123");
-        user.setPhone("153");
-        user.setCreateTime(new Date());
-        userMapper.insert(user);
-    }
+
     @Autowired
     UserService userService;
     @Test
-    public void findAll1() {
-        List<User> list = userService.list();
-        System.out.println(list);
+    public void test() {
+        User user = userService.getUserInfoByName("997");
+        System.out.println(user);
     }
 
 

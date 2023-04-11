@@ -16,13 +16,10 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.security.Security;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,21 +31,35 @@ public class UserController {
     private UserService userService;
     @ApiOperation("获取所有用户")
     @GetMapping("/findAll")
-    public BaseResponse<List<UserVO>> findAllUser(){
+    public BaseResponse<List<User>> findAllUser(){
         List<User> userList = userService.list();
-        List<UserVO> userVOList = userList.stream().map(User::toVo).collect(Collectors.toList());
-        return ResultUtils.success(userVOList);
+        //List<UserVO> userVOList = userList.stream().map(User::toVo).collect(Collectors.toList());
+        return ResultUtils.success(userList);
     }
-    @GetMapping("/userLogin")
-    public BaseResponse<UserVO> userLogin(String username,String pwd){
+    @ApiOperation("用户登录（密码）")
+    @PostMapping("/userLogin")
+    public BaseResponse<UserVO> userLogin(@RequestBody String username,@RequestBody String pwd){
         Subject subject = SecurityUtils.getSubject();
         AuthenticationToken token = new UsernamePasswordToken(username,pwd);
+
         try {
             subject.login(token);
             UserVO userVO = userService.getUserInfoByName(username).toVo();
             return ResultUtils.success(userVO);
         } catch (AuthenticationException e) {
-            throw new BusinessException(ErrorCode.NOT_LOGIN,"用户名或密码错误");
+            e.printStackTrace();
+            return ResultUtils.error(ErrorCode.NOT_LOGIN);
         }
+    }
+    @ApiOperation("用户注册")
+    @PostMapping("/register")
+    BaseResponse<UserVO> register(@RequestBody User user){
+        if (userService.getUserInfoByName(user.getUsername())==null){
+            String pwd = user.getUserPassword();
+            String MD5pwd = new SimpleHash("md5",pwd,"salt",3).toString();
+            user.setUserPassword(MD5pwd);
+            if (userService.save(user))return ResultUtils.success(user.toVo());
+            else return ResultUtils.error(ErrorCode.SYSTEM_ERROR);
+        }else return ResultUtils.error(ErrorCode.PARAMS_ERROR,"用户名已存在！","用户名已存在！");
     }
 }

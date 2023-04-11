@@ -14,12 +14,17 @@ public class ShiroConfig {
     private MyRealm myRealm;
 
     @Bean
+    //配置securityManager
     public DefaultWebSecurityManager defaultWebSecurityManager(){
+        //创建对象
         DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager();
+        //创建加密对象，设置相关属性
         HashedCredentialsMatcher matcher = new HashedCredentialsMatcher();
         matcher.setHashAlgorithmName("md5");
-        matcher.setHashIterations(1);
+        matcher.setHashIterations(3);
+        //将加密对象存入realm中
         myRealm.setCredentialsMatcher(matcher);
+        //将realm存入manager中
         defaultWebSecurityManager.setRealm(myRealm);
         return defaultWebSecurityManager;
     }
@@ -31,7 +36,7 @@ public class ShiroConfig {
         definition.addPathDefinition("/user/userLogin","anon");
         definition.addPathDefinition("login","anon");
         //设置需要认证的范围
-        definition.addPathDefinition("/**","authc");
+        //definition.addPathDefinition("/**","authc");
         return definition;
     }
 }
