@@ -15,5 +15,8 @@ import java.util.List;
 @RestController
 @RequestMapping("")
 public class IndexController {
-
+    @GetMapping("index")
+    public BaseResponse<String> index (){
+        return ResultUtils.success("success");
+    }
 }

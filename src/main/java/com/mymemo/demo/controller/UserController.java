@@ -38,11 +38,12 @@ public class UserController {
     }
     @ApiOperation("用户登录（密码）")
     @PostMapping("/userLogin")
-    public BaseResponse<UserVO> userLogin(@RequestBody String username,@RequestBody String pwd){
-        Subject subject = SecurityUtils.getSubject();
-        AuthenticationToken token = new UsernamePasswordToken(username,pwd);
+    public BaseResponse<UserVO> userLogin(String username,String password){
 
+        UsernamePasswordToken token = new UsernamePasswordToken(username,password);
+        System.out.println(token);
         try {
+            Subject subject = SecurityUtils.getSubject();
             subject.login(token);
             UserVO userVO = userService.getUserInfoByName(username).toVo();
             return ResultUtils.success(userVO);

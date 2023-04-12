@@ -9,6 +9,7 @@ spring:
     password:
 server:
   port: 8080
+  address: 0.0.0.0   # 允许局域网访问
   servlet:
     context-path: '/mymemo'
     session:

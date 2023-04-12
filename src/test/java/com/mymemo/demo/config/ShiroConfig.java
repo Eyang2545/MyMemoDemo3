@@ -3,10 +3,8 @@ package com.mymemo.demo.config;
 import com.mymemo.demo.realm.MyRealm;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.realm.Realm;
-import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.config.DefaultShiroFilterChainDefinition;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
-import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,9 +16,9 @@ public class ShiroConfig {
 
     @Bean
     //配置securityManager
-    public DefaultWebSecurityManager securityManager(){
+    public DefaultWebSecurityManager defaultWebSecurityManager(){
         //创建对象
-        DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
+        DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager();
         //创建加密对象，设置相关属性
         HashedCredentialsMatcher matcher = new HashedCredentialsMatcher();
         matcher.setHashAlgorithmName("md5");
@@ -28,8 +26,8 @@ public class ShiroConfig {
         //将加密对象存入realm中
         myRealm.setCredentialsMatcher(matcher);
         //将realm存入manager中
-        securityManager.setRealm(myRealm);
-        return securityManager;
+        defaultWebSecurityManager.setRealm(myRealm);
+        return defaultWebSecurityManager;
     }
     //拦截范围
     @Bean
@@ -43,5 +41,8 @@ public class ShiroConfig {
         return definition;
     }
 
-
+    @Bean
+    public Realm getRealm() {
+        return new MyRealm();
+    }
 }
