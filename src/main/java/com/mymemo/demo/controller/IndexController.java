@@ -4,19 +4,22 @@ import com.mymemo.demo.common.BaseResponse;
 import com.mymemo.demo.common.ResultUtils;
 import com.mymemo.demo.model.vo.UserVO;
 import io.swagger.annotations.Api;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Api(tags = "页面管理模块")
-@RestController
-@RequestMapping("")
+@Controller
+@RequestMapping("/index")
 public class IndexController {
-    @GetMapping("index")
-    public BaseResponse<String> index (){
-        return ResultUtils.success("success");
+    @GetMapping("/login")
+    public String login (){
+        return "login.html";
+    }
+    @ResponseBody
+    @GetMapping("/test")
+    public String test(){
+        return "test";
     }
 }

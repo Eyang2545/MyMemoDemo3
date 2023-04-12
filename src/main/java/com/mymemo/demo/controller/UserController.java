@@ -18,42 +18,48 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Api(tags = "用户管理模块")
-@RestController
-@RequestMapping("/user")
+@Controller
+@RequestMapping("/api")
 public class UserController {
     @Autowired
     private UserService userService;
     @ApiOperation("获取所有用户")
     @GetMapping("/findAll")
+    @ResponseBody
     public BaseResponse<List<User>> findAllUser(){
         List<User> userList = userService.list();
         //List<UserVO> userVOList = userList.stream().map(User::toVo).collect(Collectors.toList());
         return ResultUtils.success(userList);
     }
     @ApiOperation("用户登录（密码）")
-    @PostMapping("/userLogin")
-    public BaseResponse<UserVO> userLogin(String username,String password){
-
+    @GetMapping("/userLogin")
+    public String userLogin(String username, String password, HttpSession session){
+        System.out.println(username);
+        System.out.println(password);
         UsernamePasswordToken token = new UsernamePasswordToken(username,password);
         System.out.println(token);
+        Subject subject = SecurityUtils.getSubject();
         try {
-            Subject subject = SecurityUtils.getSubject();
             subject.login(token);
             UserVO userVO = userService.getUserInfoByName(username).toVo();
-            return ResultUtils.success(userVO);
+            session.setAttribute("user",userVO);
+            return "main.html";
         } catch (AuthenticationException e) {
             e.printStackTrace();
-            return ResultUtils.error(ErrorCode.NOT_LOGIN);
+            return "";
         }
     }
     @ApiOperation("用户注册")
-    @PostMapping("/register")
+    @PostMapping("/userRegister")
+    @ResponseBody
     BaseResponse<UserVO> register(@RequestBody User user){
         if (userService.getUserInfoByName(user.getUsername())==null){
             String pwd = user.getUserPassword();
@@ -63,4 +69,17 @@ public class UserController {
             else return ResultUtils.error(ErrorCode.SYSTEM_ERROR);
         }else return ResultUtils.error(ErrorCode.PARAMS_ERROR,"用户名已存在！","用户名已存在！");
     }
+    @ApiOperation("删除用户（username）")
+    @ResponseBody
+    @DeleteMapping("/userDelete")
+    public BaseResponse<UserVO> delete(String username){
+        User user = userService.getUserInfoByName(username);
+        if(user!=null){
+            if (userService.removeById(user.getId()))return ResultUtils.success(user.toVo());
+            else return ResultUtils.error(ErrorCode.SYSTEM_ERROR);
+        }else return ResultUtils.error(ErrorCode.PARAMS_ERROR,"没有这个用户","没有这个用户");
+    }
+
+
+
 }
