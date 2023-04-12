@@ -31,55 +31,62 @@ import java.util.stream.Collectors;
 public class UserController {
     @Autowired
     private UserService userService;
+
     @ApiOperation("获取所有用户")
     @GetMapping("/findAll")
     @ResponseBody
-    public BaseResponse<List<User>> findAllUser(){
+    public BaseResponse<List<User>> findAllUser() {
         List<User> userList = userService.list();
         //List<UserVO> userVOList = userList.stream().map(User::toVo).collect(Collectors.toList());
         return ResultUtils.success(userList);
     }
+
     @ApiOperation("用户登录（密码）")
     @GetMapping("/userLogin")
-    public String userLogin(String username, String password, HttpSession session){
+    public String userLogin(String username, String password, HttpSession session) {
         System.out.println(username);
         System.out.println(password);
-        UsernamePasswordToken token = new UsernamePasswordToken(username,password);
+        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
         System.out.println(token);
         Subject subject = SecurityUtils.getSubject();
         try {
             subject.login(token);
             UserVO userVO = userService.getUserInfoByName(username).toVo();
-            session.setAttribute("user",userVO);
+            session.setAttribute("user", userVO);
             return "main.html";
         } catch (AuthenticationException e) {
             e.printStackTrace();
-            return "";
+            return "login.html";
         }
     }
+
     @ApiOperation("用户注册")
-    @PostMapping("/userRegister")
+    @PostMapping("/userRegisterByPhone")
     @ResponseBody
-    BaseResponse<UserVO> register(@RequestBody User user){
-        if (userService.getUserInfoByName(user.getUsername())==null){
-            String pwd = user.getUserPassword();
-            String MD5pwd = new SimpleHash("md5",pwd,"salt",3).toString();
-            user.setUserPassword(MD5pwd);
-            if (userService.save(user))return ResultUtils.success(user.toVo());
-            else return ResultUtils.error(ErrorCode.SYSTEM_ERROR);
-        }else return ResultUtils.error(ErrorCode.PARAMS_ERROR,"用户名已存在！","用户名已存在！");
-    }
-    @ApiOperation("删除用户（username）")
-    @ResponseBody
-    @DeleteMapping("/userDelete")
-    public BaseResponse<UserVO> delete(String username){
-        User user = userService.getUserInfoByName(username);
-        if(user!=null){
-            if (userService.removeById(user.getId()))return ResultUtils.success(user.toVo());
-            else return ResultUtils.error(ErrorCode.SYSTEM_ERROR);
-        }else return ResultUtils.error(ErrorCode.PARAMS_ERROR,"没有这个用户","没有这个用户");
+    BaseResponse<UserVO> registerByPhone(@RequestBody User user) {
+
+        if (userService.getUserInfoByName(user.getUsername()) == null)
+            if (userService.getUserInfoByPhone(user.getPhone()) == null) {
+                user.setEmail("");
+                String pwd = user.getUserPassword();
+                String MD5pwd = new SimpleHash("md5", pwd, "salt", 3).toString();
+                user.setUserPassword(MD5pwd);
+                if (userService.save(user)) return ResultUtils.success(user.toVo());
+                else return ResultUtils.error(ErrorCode.SYSTEM_ERROR_B0001);
+            } else return ResultUtils.error(ErrorCode.USER_ERROR_A0115);
+        else return ResultUtils.error(ErrorCode.USER_ERROR_A0111);
     }
 
+    @ApiOperation("/删除用户（username）")
+    @ResponseBody
+    @DeleteMapping("/userDelete")
+    public BaseResponse<UserVO> delete(String username) {
+        User user = userService.getUserInfoByName(username);
+        if (user != null) {
+            if (userService.removeById(user.getId())) return ResultUtils.success(user.toVo());
+            else return ResultUtils.error(ErrorCode.SYSTEM_ERROR_B0001);
+        } else return ResultUtils.error(ErrorCode.USER_ERROR_A0201);
+    }
 
 
 }

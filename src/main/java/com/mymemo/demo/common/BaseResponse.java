@@ -14,7 +14,7 @@ public class BaseResponse<T> implements Serializable {
 
     @JsonProperty("isSuccess")
     boolean success = false;
-    private int code;
+    private String code;
 
     private T data;
 
@@ -26,28 +26,12 @@ public class BaseResponse<T> implements Serializable {
 
     }
 
-    public BaseResponse(int code, T data, String message, boolean success, String description) {
+    public BaseResponse(String code, T data, String message, boolean success, String description) {
         this.code = code;
         this.data = data;
         this.message = message;
         this.success= success;
         this.description = description;
-    }
-
-    public BaseResponse(int code, T data, boolean success) {
-        this(code,data,"",success,"");
-    }
-
-    public BaseResponse(ErrorCode errorCode) {
-        this(errorCode.getCode(),null,errorCode.getMessage(),false,errorCode.getDescription());
-    }
-
-    public BaseResponse(ErrorCode errorCode, String message, String description) {
-        this(errorCode.getCode(),null,message,false,description);
-    }
-
-    public BaseResponse(int code, String message, String description) {
-        this(code,null,message,false,description);
     }
 
 

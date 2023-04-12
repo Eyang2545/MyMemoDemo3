@@ -5,29 +5,23 @@ import com.mymemo.demo.common.ErrorCode;
 
 public class BusinessException extends RuntimeException{
 
-    private final int code;
+    private final String code;
 
     private final String description;
 
-    public BusinessException(String message, int code, String description) {
-        super(message);
-        this.code = code;
-        this.description = description;
-    }
+    private final ErrorCode errorCode;
 
-    public BusinessException(ErrorCode errorCode, String description) {
-        super(errorCode.getMessage());
-        this.code = errorCode.getCode();
-        this.description = description;
-    }
 
     public BusinessException(ErrorCode errorCode) {
-        super(errorCode.getMessage());
+        super(errorCode.getDescription());
         this.code = errorCode.getCode();
         this.description = errorCode.getDescription();
+        this.errorCode=errorCode;
     }
 
-    public int getCode() {return code;}
+    public String getCodeString() {return code;}
+
+    public ErrorCode getErrorCode() {return errorCode;}
 
     public String getDescription() {return description;}
 

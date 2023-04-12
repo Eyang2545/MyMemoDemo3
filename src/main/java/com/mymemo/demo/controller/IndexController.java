@@ -17,9 +17,4 @@ public class IndexController {
     public String login (){
         return "login.html";
     }
-    @ResponseBody
-    @GetMapping("/test")
-    public String test(){
-        return "test";
-    }
 }
