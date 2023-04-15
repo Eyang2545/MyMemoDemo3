@@ -1,5 +1,6 @@
 package com.mymemo.demo.model.vo;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -40,6 +41,12 @@ public class UserVO {
      * 性别
      */
     protected Integer age;
+
+
+    /**
+     * 0 -- 普通用户 1 -- 管理员
+     */
+    private Integer userRole;
 
 
     /**

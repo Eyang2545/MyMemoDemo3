@@ -15,6 +15,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,7 @@ public class UserController {
     @ApiOperation("获取所有用户")
     @GetMapping("/findAll")
     @ResponseBody
+    @RequiresRoles("1")
     public BaseResponse<List<User>> findAllUser() {
         List<User> userList = userService.list();
         //List<UserVO> userVOList = userList.stream().map(User::toVo).collect(Collectors.toList());
@@ -43,10 +45,12 @@ public class UserController {
 
     @ApiOperation("用户登录（密码）")
     @GetMapping("/userLogin")
-    public String userLogin(String username, String password, HttpSession session) {
+    public String userLogin(String username, String password,
+                            @RequestParam(defaultValue = "false")boolean rememberMe,
+                            HttpSession session) {
         System.out.println(username);
         System.out.println(password);
-        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+        UsernamePasswordToken token = new UsernamePasswordToken(username, password,rememberMe);
         System.out.println(token);
         Subject subject = SecurityUtils.getSubject();
         try {
@@ -56,7 +60,7 @@ public class UserController {
             return "main.html";
         } catch (AuthenticationException e) {
             e.printStackTrace();
-            return "login.html";
+            return "loginFail.html";
         }
     }
 
@@ -80,6 +84,7 @@ public class UserController {
     @ApiOperation("/删除用户（username）")
     @ResponseBody
     @DeleteMapping("/userDelete")
+    @RequiresRoles("1")
     public BaseResponse<UserVO> delete(String username) {
         User user = userService.getUserInfoByName(username);
         if (user != null) {

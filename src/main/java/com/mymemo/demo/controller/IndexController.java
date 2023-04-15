@@ -17,4 +17,12 @@ public class IndexController {
     public String login (){
         return "login.html";
     }
+    @GetMapping("/loginFail")
+    public String loginFail (){
+        return "loginFail.html";
+    }
+    @GetMapping("/main")
+    public String mainPage (){
+        return "main.html";
+    }
 }
