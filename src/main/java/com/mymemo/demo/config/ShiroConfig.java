@@ -60,7 +60,9 @@ public class ShiroConfig {
         DefaultShiroFilterChainDefinition definition = new DefaultShiroFilterChainDefinition();
         //设置无需认证的范围
         definition.addPathDefinition("/api/userLogin","anon");
+        definition.addPathDefinition("/api/userRegisterByPhone","anon");
         definition.addPathDefinition("/index/login","anon");
+        definition.addPathDefinition("/index/register","anon");
         //设置登出过滤器
         definition.addPathDefinition("/logout","logout");
         //设置需要认证的范围

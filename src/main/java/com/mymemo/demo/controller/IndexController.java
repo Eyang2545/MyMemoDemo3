@@ -25,4 +25,8 @@ public class IndexController {
     public String mainPage (){
         return "main.html";
     }
+    @GetMapping("/register")
+    public String register () {
+        return "register.html";
+    }
 }

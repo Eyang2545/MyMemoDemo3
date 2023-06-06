@@ -1,17 +1,53 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http//www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            color: #4CAF50;
+        }
+
+        span {
+            font-weight: bold;
+            color: #333;
+        }
+
+        a {
+            display: inline-block;
+            margin: 10px;
+            color: white;
+            background-color: #4CAF50;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        a:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 
 <body>
-    <h1>登录认证后的主页面</h1>
-    <br>
-    登录用户为:<span th:text="${session.user.username}">e</span>
-    <br>
+<h1>登录成功</h1>
+<p>登录用户为: <span th:text="${session.user.username}">e</span></p>
+<div>
     <a href="/mymemo/logout">登出</a>
+    <a href="/mymemo/doc.html">查看API</a>
+</div>
 </body>
-
-
 </html>

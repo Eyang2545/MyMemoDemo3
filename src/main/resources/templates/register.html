@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>注册</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			margin: 0;
+			padding: 0;
+			background-color: #f0f0f0;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+		}
+		.register-container {
+			width: 300px;
+			padding: 20px;
+			background-color: white;
+			border-radius: 10px;
+			box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+			text-align: center;
+		}
+		h1 {
+			margin-bottom: 20px;
+		}
+		.input-group {
+			margin-bottom: 10px;
+		}
+		.input-group label {
+			display: block;
+			margin-bottom: 5px;
+			text-align: left;
+		}
+		.input-group input {
+			width: 100%;
+			padding: 10px;
+			border: 1px solid #ddd;
+			border-radius: 5px;
+			box-sizing: border-box;
+		}
+		.input-group input[type="submit"] {
+			background-color: #4CAF50;
+			color: white;
+			cursor: pointer;
+			border: none;
+		}
+		.input-group input[type="submit"]:hover {
+			background-color: #45a049;
+		}
+		.login-link {
+			display: block;
+			margin-top: 10px;
+			color: #4CAF50;
+			text-decoration: none;
+		}
+		.login-link:hover {
+			color: #45a049;
+		}
+		.error-message {
+			color: red;
+			text-align: center;
+			height: 20px; /* adjust as needed */
+			margin-bottom: 10px; /* same as your .input-group margin */
+		}
+	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			$("form").on("submit", function(e) {
+				e.preventDefault();
+
+				let formData = {};
+				$(this).serializeArray().map(function(item) {
+					formData[item.name] = item.value;
+				});
+
+				$.ajax({
+					url: '/mymemo/api/userRegisterByPhone',
+					type: 'post',
+					data: JSON.stringify(formData),
+					contentType: 'application/json',
+					dataType: 'json',
+					success: function(response) {
+						if(response.isSuccess) {
+							window.location.href = '/mymemo/index/main';
+						} else {
+							$('.error-message').text(response.message);
+						}
+					},
+					error: function(xhr, status, error) {
+						let errorMessage = xhr.status + ': ' + xhr.statusText;
+						$('.error-message').text('Error - ' + errorMessage);
+					}
+				});
+			});
+		});
+	</script>
+</head>
+
+<body>
+<div class="register-container">
+	<h1>注册</h1>
+	<form action="/mymemo/api/userRegisterByPhone" method="post">
+		<div class="input-group">
+			<label for="username">用户名:</label>
+			<input type="text" id="username" name="username" value="">
+		</div>
+		<div class="input-group">
+			<label for="userPassword">密码:</label>
+			<input type="password" id="userPassword" name="userPassword" value="">
+		</div>
+		<div class="input-group">
+			<label for="phone">电话号码:</label>
+			<input type="tel" id="phone" name="phone" value="">
+		</div>
+		<div class="error-message"></div>
+		<div class="input-group">
+			<input type="submit" value="注册">
+		</div>
+	</form>
+	<a class="login-link" href="/mymemo/index/login">已有账号？点击登录</a>
+</div>
+</body>
+
+</html>

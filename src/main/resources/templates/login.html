@@ -2,19 +2,140 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>登录</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .login-container {
+            width: 300px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        .input-group {
+            margin-bottom: 10px;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            text-align: left;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .checkbox-group {
+            display: flex;
+            justify-content: flex-start;
+            margin-bottom: 10px;
+        }
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+        }
+        .checkbox-group input {
+            margin-right: 5px;
+        }
+        .input-group input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            border: none;
+        }
+        .input-group input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .register-link {
+            display: block;
+            margin-top: 10px;
+            color: #4CAF50;
+            text-decoration: none;
+        }
+        .register-link:hover {
+            color: #45a049;
+        }
+        .checkbox-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .error-message {
+            color: red;
+            text-align: right;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('form').submit(function(e) {
+                e.preventDefault();
+
+                $('.error-message').text('');
+
+                $.ajax({
+                    url: '/mymemo/api/userLogin',
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    contentType: 'application/x-www-form-urlencoded',  // Add this line
+                    success: function(response) {
+                        if (response.isSuccess) {
+                            window.location.href = "/mymemo/index/main";
+                        } else {
+                            $('.error-message').text(response.message);
+                        }
+                    },
+                    error: function(xhr, textStatus, errorThrown) {
+                        $('.error-message').text("请求失败，请稍后再试。");
+                    }
+                });
+            });
+        });
+
+    </script>
 </head>
 
 <body>
+<div class="login-container">
     <h1>登录</h1>
-    <br>
-    <form action="/mymemo/api/userLogin" method="get">
-        <div>用户名:<input type="text" name="username" value=""></div>
-        <div>密码:<input type="password" name="password" value=""></div>
-        <div>记住用户:<input type="checkbox" name="rememberMe" value="true"></div>
-        <div><input type="submit" value="登录"></div>
+    <form action="/mymemo/api/userLogin" method="post">
+        <div class="input-group">
+            <label for="username">用户名:</label>
+            <input type="text" id="username" name="username" value="">
+        </div>
+        <div class="input-group">
+            <label for="password">密码:</label>
+            <input type="password" id="password" name="password" value="">
+        </div>
+        <div class="checkbox-group">
+            <label>
+                <input type="checkbox" name="rememberMe" value="true">
+                记住用户
+            </label>
+            <span class="error-message"></span>
+        </div>
+        <div class="input-group">
+            <input type="submit" value="登录">
+        </div>
     </form>
+    <a class="register-link" href="/mymemo/index/register">还没账号？点击注册</a>
+</div>
 </body>
-
 
 </html>
