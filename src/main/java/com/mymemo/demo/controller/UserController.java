@@ -104,5 +104,19 @@ public class UserController {
         } else return ResultUtils.error(ErrorCode.USER_ERROR_A0201);
     }
 
-
+    @ApiOperation("用户修改密码")
+    @PostMapping("/revisePwd")
+    @ResponseBody
+    public BaseResponse<String> revisePwd(String password, String newPassword,
+                                          HttpSession session) {
+        UserVO userVO = (UserVO) session.getAttribute("user");
+        String username = userVO.getUsername();
+        String MD5pwd = new SimpleHash("md5", password, "salt", 3).toString();
+        User user = userService.getUserInfoByName(username);
+        if (user.getUserPassword().equals(MD5pwd)) {
+            String newMD5pwd = new SimpleHash("md5", newPassword, "salt", 3).toString();
+            userService.revisePwdByPwd(username, newMD5pwd);
+            return ResultUtils.success("修改密码成功","修改密码成功");
+        } else return ResultUtils.error(ErrorCode.USER_ERROR_A0210, "密码错误");
+    }
 }

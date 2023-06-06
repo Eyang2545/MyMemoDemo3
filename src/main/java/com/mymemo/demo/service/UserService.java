@@ -11,4 +11,5 @@ public interface UserService extends IService<User> {
     User getUserInfoByEmail(String email);
     User getUserInfoByPhone(String phone);
 
+    void revisePwdByPwd(String username,String newMD5pwd);
 }

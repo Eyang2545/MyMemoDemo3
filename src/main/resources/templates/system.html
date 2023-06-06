@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>系统</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      height: 100%;
+    }
+
+    .container {
+      display: flex;
+      height: 100%;
+      font-family: Arial, sans-serif;
+      position: relative; /* New */
+    }
+
+    .menu {
+      width: 300px;
+      background-color: rgb(30,40,45);
+      padding: 0px;
+      box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+    }
+
+    .menu button {
+      width: 100%;
+      padding: 15px;
+      margin: 0;
+      font-size: 18px;
+      color: rgb(128,128,128);
+      background-color: transparent;
+      border: none;
+      transition: color 0.3s ease;
+    }
+
+    .menu button:hover {
+      color: white;
+    }
+
+    .menu button.active {
+      color: white;
+      background-color: rgb(25,144,255);
+    }
+
+    .content {
+      flex-grow: 1;
+      padding: 20px;
+      background-color: #e9ecef;
+      font-size: 24px;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    .logout, .revisePwd {
+      position: absolute;
+      right: 20px;
+      padding: 10px;
+      background-color: rgb(25,144,255);
+      color: white;
+      border: none;
+      border-radius: 3px;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .logout {
+      top: 20px;
+    }
+
+    .revisePwd {
+      top: 60px;
+    }
+
+    .logout:hover, .revisePwd:hover {
+      background-color: rgb(20, 114, 204);
+    }
+
+    .controlButton {
+      padding: 10px;
+      margin: 0 10px;
+      background-color: rgb(25,144,255);
+      color: white;
+      border: none;
+      border-radius: 3px;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .controlButton:hover {
+      background-color: rgb(20, 114, 204);
+    }
+
+    .errprdiv{
+      height: 13px;
+    }
+
+
+    .button-container button {
+      box-sizing: border-box;
+      padding: 10px;
+      cursor: pointer;
+    }
+    #back {
+      margin-top: auto;
+      background-color: rgb(67,70,84);
+
+    }
+
+
+    #buttonContainer {
+      position: absolute;
+      right: 0; /* New - Stick to right side of the browser */
+      top: 0; /* New - Stick to top side of the browser */
+      display: flex;
+      justify-content: space-between; /* New - Space out elements evenly */
+      align-items: center;
+      background-color: white;
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+      padding: 10px;
+      left: 300px; /* Adjusted - Stick to right side of the menu */
+      width: calc(100% - 300px); /* New - Take up rest of the width after menu */
+    }
+    #buttonContainer p {
+      flex-grow: 1; /* New - Let this paragraph take up any extra space */
+      text-align: center; /* New - Center align text */
+    }
+    #buttonContainer button {
+      flex-grow: 0; /* New - Don't let these buttons take up extra space */
+    }
+
+    #pwdForm {
+      display: none;
+      position: fixed;
+      width: 300px;
+      padding: 20px;
+      background-color: white;
+      border-radius: 10px;
+      top: 50%;
+      left: 50%;
+      margin-left: -150px;
+      margin-top: -100px;
+      box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+      text-align: center;
+      transition: opacity 0.2s ease-in-out; /* New */
+      opacity: 0; /* New */
+      align-items: stretch; /* new */
+      z-index: 20; /* New - This must be greater than the z-index of #overlay */
+    }
+
+    #pwdForm input {
+      display: block;
+      margin: 10px auto;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      box-sizing: border-box;
+      width: 100%; /* made the inputs wider */
+      margin-top: 0px; /* Remove top margin */
+    }
+
+    #pwdForm label {
+      display: block;
+      margin-bottom: 5px;
+      margin-top: 5px; /* Add a top margin */
+      text-align: left; /* align the labels to the left */
+      width: 100%; /* give the labels a width */
+    }
+
+    #pwdForm button {
+      padding: 10px 20px;
+      margin: 10px;
+      border-radius: 3px;
+      border: none;
+      color: white;
+      background-color: rgb(25,144,255);
+      transition: background-color 0.3s ease;
+      box-sizing: border-box;
+    }
+
+    #pwdForm button:hover {
+      background-color: rgb(20, 114, 204);
+    }
+
+
+    #pwdForm .error {
+      color: red;
+      text-align: left;
+    }
+
+    #message {
+      position: fixed;
+      top: -60px; /* start from above the screen */
+      left: 50%; /* center the message */
+      transform: translateX(-50%); /* center the message */
+      padding: 10px 20px;
+      background-color: rgb(25,144,255);
+      color: white;
+      border-radius: 3px;
+      display: block; /* always visible */
+      transition: top 0.3s ease, opacity 0.3s ease; /* transition the opacity as well */
+      opacity: 0; /* start from invisible */
+    }
+
+    #message.show {
+      top: 20px; /* move down to show the message */
+      opacity: 1; /* fade in */
+    }
+
+
+    #overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      display: none;
+      z-index: 10; /* This must be less than the z-index of #pwdForm */
+    }
+
+  </style>
+
+  <script>
+    window.onload = function() {
+      changeContent(document.getElementsByClassName('menu')[0].children[0], '这是个人主页');
+    }
+
+    function changeContent(btn, text) {
+      // remove active class
+      var activeBtn = document.getElementsByClassName('active')[0];
+      if (activeBtn) {
+        activeBtn.classList.remove('active');
+      }
+
+      // add active class
+      btn.classList.add('active');
+
+      // change the content
+      document.getElementById("content").innerHTML = text;
+
+      // show logout and revise password button only in '个人主页'
+      if (text === '这是个人主页') {
+        document.getElementById("logout").style.display = "block";
+        document.getElementById("revisePwd").style.display = "block";
+      } else {
+        document.getElementById("logout").style.display = "none";
+        document.getElementById("revisePwd").style.display = "none";
+      }
+    }
+
+    function showPwdForm() {
+      // clear input values
+      document.getElementById('password').value = '';
+      document.getElementById('newPassword').value = '';
+      // clear error message
+      document.getElementById('error').innerHTML = '';
+      // Show password form
+      document.getElementById('pwdForm').style.display = 'block';
+      setTimeout(function() {
+        document.getElementById('pwdForm').style.opacity = '1';
+      }, 10); // Need to delay the opacity change for transition to take effect
+      // Show overlay
+      document.getElementById('overlay').style.display = 'block';
+    }
+
+    function hidePwdForm() {
+      // Hide password form
+      document.getElementById('pwdForm').style.opacity = '0';
+      setTimeout(function() {
+        document.getElementById('pwdForm').style.display = 'none';
+      }, 500); // Need to delay the display change until after transition
+
+      // Hide overlay
+      document.getElementById('overlay').style.display = 'none';
+    }
+
+    function revisePwd() {
+      // get input values
+      var password = document.getElementById('password').value;
+      var newPassword = document.getElementById('newPassword').value;
+
+      // create form data
+      var formData = new FormData();
+      formData.append('password', password);
+      formData.append('newPassword', newPassword);
+
+      // send ajax request
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', '/mymemo/api/revisePwd', true);
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+          var response = JSON.parse(xhr.responseText);
+          if (response.isSuccess) {
+            // success, hide the form and show message
+            hidePwdForm();
+            showMessage(response.message);
+          } else {
+            // error, show error message in form
+            showErrorMessage(response.message);
+          }
+        }
+      };
+      xhr.send(formData);
+    }
+
+
+    function showMessage(msg) {
+      var message = document.getElementById('message');
+      message.innerHTML = msg;
+      message.classList.add('show');
+      setTimeout(function() {
+        message.style.opacity = '0'; // start fade out
+        setTimeout(function() {
+          message.classList.remove('show');
+          message.style.opacity = '1'; // reset opacity
+        }, 2000);
+      }, 3000); // start fade out after 3s
+    }
+
+
+
+    function showErrorMessage(msg) {
+      var error = document.getElementById('error');
+      error.innerHTML = msg;
+      error.style.display = 'block';
+    }
+
+    function logout() {
+      window.location.href = "/mymemo/logout";
+    }
+    function toIndexMain(){
+      window.location.href = "/mymemo/index/main";
+    }
+
+  </script>
+</head>
+
+<body>
+<div class="container">
+  <div class="menu">
+    <button onclick="changeContent(this, '这是个人主页')">个人主页</button>
+    <button onclick="changeContent(this, '这是账单管理')">账单管理</button>
+    <button onclick="changeContent(this, '这是用户管理')">用户管理</button>
+    <button id="back" onclick="toIndexMain()">返回</button>
+  </div>
+  <div id="buttonContainer">
+    <p>你好， <span th:text="${session.user.username}">e</span>！</p>
+    <button id="logout" class="controlButton" onclick="logout()">登出</button>
+    <button id="revisePwd" class="controlButton" onclick="showPwdForm()">修改密码</button>
+  </div>
+</div>
+
+<div id="pwdForm">
+  <h1>修改密码</h1>
+  <div class="input-group">
+    <label for="password">旧密码:</label>
+    <input id="password" type="password">
+  </div>
+  <div class="input-group">
+    <label for="newPassword">新密码:</label>
+    <input id="newPassword" type="password">
+  </div>
+  <div class="errprdiv"><span id="error" class="error"></span></div>
+  <div style="display: flex; justify-content: space-between;">
+    <button style="width: 45%;" class="button-container button" onclick="revisePwd()">确定</button>
+    <button style="width: 45%;" class="button-container button" onclick="hidePwdForm()">取消</button>
+  </div>
+
+
+
+</div>
+<div id="message"></div>
+<div id="overlay"></div>
+</body>
+
+</html>

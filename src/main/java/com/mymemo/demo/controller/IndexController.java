@@ -17,9 +17,9 @@ public class IndexController {
     public String login (){
         return "login.html";
     }
-    @GetMapping("/loginFail")
+    @GetMapping("/system")
     public String loginFail (){
-        return "loginFail.html";
+        return "system.html";
     }
     @GetMapping("/main")
     public String mainPage (){
@@ -29,4 +29,5 @@ public class IndexController {
     public String register () {
         return "register.html";
     }
+
 }

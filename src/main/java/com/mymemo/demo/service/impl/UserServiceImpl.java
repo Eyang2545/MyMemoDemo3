@@ -1,6 +1,7 @@
 package com.mymemo.demo.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mymemo.demo.common.ExistCode;
 import com.mymemo.demo.mapper.UserMapper;
@@ -35,6 +36,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         QueryWrapper<User> wrapper = new QueryWrapper<>();
         wrapper.eq("phone",phone);
         return userMapper.selectOne(wrapper);
+    }
+
+    @Override
+    public void revisePwdByPwd(String username, String newMD5pwd) {
+        UpdateWrapper<User> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.eq("username",username);
+        User user = new User();
+        user.setUserPassword(newMD5pwd);
+        userMapper.update(user,updateWrapper);
     }
 
 
