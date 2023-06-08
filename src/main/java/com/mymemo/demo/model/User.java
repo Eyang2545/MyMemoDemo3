@@ -77,6 +77,18 @@ public class User implements Serializable {
     private Integer userRole;
 
     /**
+     * 工作性质
+     */
+    @TableField("work_nature")
+    private String workNature;
+
+    /**
+     * 公司部门
+     */
+    @TableField("company_dep")
+    private String companyDep;
+
+    /**
      * 创建时间
      */
     @TableField("create_time")

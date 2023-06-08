@@ -53,35 +53,8 @@
       background-color: rgb(25,144,255);
     }
 
-    .content {
-      flex-grow: 1;
-      padding: 20px;
-      background-color: #e9ecef;
-      font-size: 24px;
-    }
-
     h1 {
       margin-bottom: 20px;
-    }
-
-    .logout, .revisePwd {
-      position: absolute;
-      right: 20px;
-      padding: 10px;
-      background-color: rgb(25,144,255);
-      color: white;
-      border: none;
-      border-radius: 3px;
-      text-decoration: none;
-      transition: background-color 0.3s ease;
-    }
-
-    .logout {
-      top: 20px;
-    }
-
-    .revisePwd {
-      top: 60px;
     }
 
     .logout:hover, .revisePwd:hover {
@@ -107,36 +80,59 @@
       height: 13px;
     }
 
-
     .button-container button {
       box-sizing: border-box;
       padding: 10px;
       cursor: pointer;
     }
+
     #back {
       margin-top: auto;
       background-color: rgb(67,70,84);
 
     }
 
-
-    #buttonContainer {
+    #right {
       position: absolute;
       right: 0; /* New - Stick to right side of the browser */
       top: 0; /* New - Stick to top side of the browser */
+      left: 300px; /* Adjusted - Stick to right side of the menu */
+      height: 100%;
+      background-color: white;
       display: flex;
       justify-content: space-between; /* New - Space out elements evenly */
       align-items: center;
+      padding: 0px;
+      width: calc(100% - 300px); /* New - Take up rest of the width after menu */
+
+    }
+
+    .page {
+      position: absolute;
+      bottom: 0;
+      padding: 0px;
+      height: calc(100% - 60px);
+      width: 100%; /* New - Take up rest of the width after menu */
+    }
+
+    #buttonContainer {
+      position: absolute;
+      right: 0;
+      top: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      align-items: center;
       background-color: white;
       box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-      padding: 10px;
-      left: 300px; /* Adjusted - Stick to right side of the menu */
-      width: calc(100% - 300px); /* New - Take up rest of the width after menu */
+      padding: 9px;
     }
+
     #buttonContainer p {
       flex-grow: 1; /* New - Let this paragraph take up any extra space */
       text-align: center; /* New - Center align text */
     }
+
     #buttonContainer button {
       flex-grow: 0; /* New - Don't let these buttons take up extra space */
     }
@@ -194,10 +190,115 @@
       background-color: rgb(20, 114, 204);
     }
 
-
     #pwdForm .error {
       color: red;
       text-align: left;
+    }
+
+    #addBillForm {
+      display: none;
+      position: fixed;
+      width: 300px;
+      padding: 20px;
+      background-color: white;
+      border-radius: 10px;
+      top: 50%;
+      left: 50%;
+      margin-left: -150px;
+      margin-top: -100px;
+      box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+      text-align: center;
+      transition: opacity 0.2s ease-in-out; /* New */
+      opacity: 0; /* New */
+      align-items: stretch; /* new */
+      z-index: 20; /* New - This must be greater than the z-index of #overlay */
+    }
+
+    #addBillForm input{
+      display: block;
+      margin: 10px auto;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      box-sizing: border-box;
+      width: 100%; /* made the inputs wider */
+      margin-top: 0px; /* Remove top margin */
+    }
+
+    #addBillForm label{
+      display: block;
+      margin-bottom: 5px;
+      margin-top: 5px; /* Add a top margin */
+      text-align: left; /* align the labels to the left */
+      width: 100%; /* give the labels a width */
+    }
+
+    #addBillForm button{
+      padding: 10px 20px;
+      margin: 10px;
+      border-radius: 3px;
+      border: none;
+      color: white;
+      background-color: rgb(25,144,255);
+      transition: background-color 0.3s ease;
+      box-sizing: border-box;
+    }
+
+    #addBillForm button:hover{
+      background-color: rgb(20, 114, 204);
+    }
+
+    #addUserForm {
+      display: none;
+      position: fixed;
+      width: 300px;
+      padding: 20px;
+      background-color: white;
+      border-radius: 10px;
+      top: 50%;
+      left: 50%;
+      margin-left: -150px;
+      margin-top: -100px;
+      box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+      text-align: center;
+      transition: opacity 0.2s ease-in-out; /* New */
+      opacity: 0; /* New */
+      align-items: stretch; /* new */
+      z-index: 20; /* New - This must be greater than the z-index of #overlay */
+    }
+
+    #addUserForm input{
+      display: block;
+      margin: 10px auto;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      box-sizing: border-box;
+      width: 100%; /* made the inputs wider */
+      margin-top: 0px; /* Remove top margin */
+    }
+
+    #addUserForm label{
+      display: block;
+      margin-bottom: 5px;
+      margin-top: 5px; /* Add a top margin */
+      text-align: left; /* align the labels to the left */
+      width: 100%; /* give the labels a width */
+    }
+
+    #addUserForm button{
+      padding: 10px 20px;
+      margin: 10px;
+      border-radius: 3px;
+      border: none;
+      color: white;
+      background-color: rgb(25,144,255);
+      transition: background-color 0.3s ease;
+      box-sizing: border-box;
+    }
+
+    #addUserForm button:hover{
+      background-color: rgb(20, 114, 204);
     }
 
     #message {
@@ -219,6 +320,19 @@
       opacity: 1; /* fade in */
     }
 
+    #GRZY {
+      background-color: white; /* Or any color you prefer */
+    }
+
+    #ZDGL {
+      background-color: white; /* Or any color you prefer */
+    }
+
+    #YHGL {
+      background-color: white; /* Or any color you prefer */
+    }
+
+
 
     #overlay {
       position: fixed;
@@ -235,35 +349,145 @@
 
   <script>
     window.onload = function() {
-      changeContent(document.getElementsByClassName('menu')[0].children[0], '这是个人主页');
+      changeContent(document.getElementsByClassName('menu')[0].children[0], 'GRZY');
     }
 
-    function changeContent(btn, text) {
+    function changeContent(btn, divId) {
       // remove active class
       var activeBtn = document.getElementsByClassName('active')[0];
       if (activeBtn) {
         activeBtn.classList.remove('active');
       }
 
+      // hide all divs
+      document.getElementById('GRZY').style.display = 'none';
+      document.getElementById('ZDGL').style.display = 'none';
+      document.getElementById('YHGL').style.display = 'none';
+
+
       // add active class
       btn.classList.add('active');
 
-      // change the content
-      document.getElementById("content").innerHTML = text;
-
-      // show logout and revise password button only in '个人主页'
-      if (text === '这是个人主页') {
-        document.getElementById("logout").style.display = "block";
-        document.getElementById("revisePwd").style.display = "block";
-      } else {
-        document.getElementById("logout").style.display = "none";
-        document.getElementById("revisePwd").style.display = "none";
+      // fetch data and populate table if divId is 'GRZY'
+      if (divId === 'GRZY') {
+        fetchTableData(divId, '/mymemo/api/userAction', function() {
+          // show current div
+          document.getElementById(divId).style.display = 'block';
+        });
+      } else if (divId === 'ZDGL'){
+        fetchTableData(divId, '/mymemo/api/getBills', function() {
+          // show current div
+          document.getElementById(divId).style.display = 'block';
+        });
+      }else if (divId === 'YHGL'){
+        fetchTableData(divId, '/mymemo/api/findAll', function() {
+          // show current div
+          document.getElementById(divId).style.display = 'block';
+        });
+      } else{
+        document.getElementById(divId).style.display = 'block';
       }
     }
+    function fetchTableData(divId, url, callback) {
+      // create and send ajax request
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', url, true);
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
 
+          var response = JSON.parse(xhr.responseText);
+          if (response.code === "00000") {
+            populateTable(divId, response.data);
+            callback();  // call the callback function after populating the table
+          } else {
+            // handle error, you can show an error message
+          }
+        }
+      };
+      xhr.send();
+    }
+    function populateTable(divId, data) {
+      var table = document.getElementById('table' + divId);
+      var tbody = table.getElementsByTagName('tbody')[0];
+      tbody.innerHTML = ""; // clear existing table rows
+
+      // populate table
+      data.forEach(function(rowData) {
+        var row = document.createElement('tr');
+        var cell;
+
+        switch (divId) {
+          case 'GRZY' :
+            cell = document.createElement('td');
+            cell.textContent = rowData.username;
+            row.appendChild(cell);
+
+            cell = document.createElement('td');
+            cell.textContent = rowData.userAction;
+            row.appendChild(cell);
+
+            cell = document.createElement('td');
+            cell.textContent = rowData.time;
+            row.appendChild(cell);
+
+            cell = document.createElement('td');
+            cell.textContent = rowData.ip;
+            row.appendChild(cell);
+            break;
+          case 'ZDGL' :
+            cell = document.createElement('td');
+            cell.textContent = rowData.accountId;
+            row.appendChild(cell);
+
+            cell = document.createElement('td');
+            cell.textContent = rowData.customerId;
+            row.appendChild(cell);
+
+            cell = document.createElement('td');
+            cell.textContent = rowData.totalAmount;
+            row.appendChild(cell);
+
+            cell = document.createElement('td');
+            cell.textContent = rowData.amountPaid;
+            row.appendChild(cell);
+
+            cell = document.createElement('td');
+            cell.textContent = rowData.amountDue;
+            row.appendChild(cell);
+
+            cell = document.createElement('td');
+            cell.textContent = rowData.paymentStatus;
+            row.appendChild(cell);
+
+            cell = document.createElement('td');
+            cell.textContent = rowData.billingAddress;
+            row.appendChild(cell);
+            break;
+          case 'YHGL' :
+            cell = document.createElement('td');
+            cell.textContent = rowData.username;
+            row.appendChild(cell);
+
+            cell = document.createElement('td');
+            cell.textContent = rowData.phone;
+            row.appendChild(cell);
+
+            cell = document.createElement('td');
+            cell.textContent = rowData.workNature;
+            row.appendChild(cell);
+
+            cell = document.createElement('td');
+            cell.textContent = rowData.companyDep;
+            row.appendChild(cell);
+            break;
+        }
+
+        tbody.appendChild(row);
+      });
+    }
     function showPwdForm() {
       // clear input values
-      document.getElementById('password').value = '';
+      document.getElementById('oldPassword').value = '';
       document.getElementById('newPassword').value = '';
       // clear error message
       document.getElementById('error').innerHTML = '';
@@ -275,7 +499,22 @@
       // Show overlay
       document.getElementById('overlay').style.display = 'block';
     }
-
+    function showAddBillForm(){
+      document.getElementById('addBillForm').style.display = 'block';
+      setTimeout(function() {
+        document.getElementById('addBillForm').style.opacity = '1';
+      }, 10); // Need to delay the opacity change for transition to take effect
+      // Show overlay
+      document.getElementById('overlay').style.display = 'block';
+    }
+    function showAddUserForm() {
+      document.getElementById('addUserForm').style.display = 'block';
+      setTimeout(function() {
+        document.getElementById('addUserForm').style.opacity = '1';
+      }, 10); // Need to delay the opacity change for transition to take effect
+      // Show overlay
+      document.getElementById('overlay').style.display = 'block';
+    }
     function hidePwdForm() {
       // Hide password form
       document.getElementById('pwdForm').style.opacity = '0';
@@ -286,15 +525,33 @@
       // Hide overlay
       document.getElementById('overlay').style.display = 'none';
     }
+    function hideAddBillForm(){
+      // Hide password form
+      document.getElementById('addBillForm').style.opacity = '0';
+      setTimeout(function() {
+        document.getElementById('addBillForm').style.display = 'none';
+      }, 500); // Need to delay the display change until after transition
 
+      // Hide overlay
+      document.getElementById('overlay').style.display = 'none';
+    }
+    function hideAddUserForm() {
+      document.getElementById('addUserForm').style.opacity = '0';
+      setTimeout(function() {
+        document.getElementById('addUserForm').style.display = 'none';
+      }, 500); // Need to delay the display change until after transition
+
+      // Hide overlay
+      document.getElementById('overlay').style.display = 'none';
+    }
     function revisePwd() {
       // get input values
-      var password = document.getElementById('password').value;
+      var password = document.getElementById('oldPassword').value;
       var newPassword = document.getElementById('newPassword').value;
 
       // create form data
       var formData = new FormData();
-      formData.append('password', password);
+      formData.append('oldPassword', password);
       formData.append('newPassword', newPassword);
 
       // send ajax request
@@ -315,8 +572,90 @@
       };
       xhr.send(formData);
     }
+    function addBill() {
+      // 获取输入值
+      var accountId = document.getElementById('accountId').value;
+      var customerId = document.getElementById('customerId').value;
+      var totalAmount = document.getElementById('totalAmount').value;
+      var amountPaid = document.getElementById('amountPaid').value;
+      var amountDue = document.getElementById('amountDue').value;
+      var paymentStatus = document.getElementById('paymentStatus').value;
+      var billingAddress = document.getElementById('billingAddress').value;
 
+      // 构造请求体
+      var postData = {
+        "accountId": accountId,
+        "customerId": customerId,
+        "totalAmount": totalAmount,
+        "amountPaid": amountPaid,
+        "amountDue": amountDue,
+        "paymentStatus": paymentStatus,
+        "billingAddress": billingAddress
+      };
 
+      // 发起 fetch POST 请求
+      fetch('/mymemo/api/addBill', {
+        method: 'POST', // 或者 'PUT'
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(postData),
+      })
+              .then(response => response.json())
+              .then(data => {
+                if (data.isSuccess) {
+                  hideAddBillForm();
+
+                  showMessage(data.message);
+                  // 这里你可能需要刷新账单列表或者执行其他操作
+                } else {
+                  alert('添加账单失败: ' + data.message);
+                }
+              })
+              .catch((error) => {
+                console.error('Error:', error);
+                alert('出错了: ' + error);
+              });
+    }
+    function addUser(){
+      // 获取输入值
+      var username = document.getElementById('username').value;
+      var password = document.getElementById('password').value;
+      var phone = document.getElementById('phone').value;
+      var workNature = document.getElementById('workNature').value;
+      var companyDep = document.getElementById('companyDep').value;
+      // 构造请求体
+      var postData = {
+        "username": username,
+        "password": password,
+        "phone": phone,
+        "workNature": workNature,
+        "companyDep": companyDep,
+      };
+
+      // 发起 fetch POST 请求
+      fetch('/mymemo/api/userRegisterByPhone', {
+        method: 'POST', // 或者 'PUT'
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(postData),
+      })
+              .then(response => response.json())
+              .then(data => {
+                if (data.isSuccess) {
+                  hideAddUserForm();
+                  showMessage(data.message);
+                  // 这里你可能需要刷新账单列表或者执行其他操作
+                } else {
+                  showMessage(data.message);
+                }
+              })
+              .catch((error) => {
+                console.error('Error:', error);
+                alert('出错了: ' + error);
+              });
+    }
     function showMessage(msg) {
       var message = document.getElementById('message');
       message.innerHTML = msg;
@@ -329,15 +668,11 @@
         }, 2000);
       }, 3000); // start fade out after 3s
     }
-
-
-
     function showErrorMessage(msg) {
       var error = document.getElementById('error');
       error.innerHTML = msg;
       error.style.display = 'block';
     }
-
     function logout() {
       window.location.href = "/mymemo/logout";
     }
@@ -351,23 +686,111 @@
 <body>
 <div class="container">
   <div class="menu">
-    <button onclick="changeContent(this, '这是个人主页')">个人主页</button>
-    <button onclick="changeContent(this, '这是账单管理')">账单管理</button>
-    <button onclick="changeContent(this, '这是用户管理')">用户管理</button>
+    <button onclick="changeContent(this, 'GRZY')">个人主页</button>
+    <button onclick="changeContent(this, 'ZDGL')">账单管理</button>
+    <button onclick="changeContent(this, 'YHGL')">用户管理</button>
     <button id="back" onclick="toIndexMain()">返回</button>
   </div>
-  <div id="buttonContainer">
-    <p>你好， <span th:text="${session.user.username}">e</span>！</p>
-    <button id="logout" class="controlButton" onclick="logout()">登出</button>
-    <button id="revisePwd" class="controlButton" onclick="showPwdForm()">修改密码</button>
+  <div id="right">
+    <div id="buttonContainer">
+      <p>你好， <span th:text="${session.user.username}">e</span>！</p>
+      <button id="logout" class="controlButton" onclick="logout()">登出</button>
+      <button id="revisePwd" class="controlButton" onclick="showPwdForm()">修改密码</button>
+    </div>
+    <div id="GRZY" class="page">
+      <table id="tableGRZY">
+        <thead>
+        <tr>
+          <th>用户名</th>
+          <th>操作</th>
+          <th>时间</th>
+          <th>IP地址</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>Ohana</td>
+          <td>登录</td>
+          <td>2023-06-07T17:40:22</td>
+          <td>127.0.0.1</td>
+        </tr>
+        <tr>
+          <td>Ohana</td>
+          <td>登录</td>
+          <td>2023-06-07T19:27:36</td>
+          <td>0:0:0:0:0:0:0:1</td>
+        </tr>
+        <tr>
+          <td>Ohana</td>
+          <td>登录</td>
+          <td>2023-06-07T19:29:36</td>
+          <td>0:0:0:0:0:0:0:1</td>
+        </tr>
+        <tr>
+          <td>Ohana</td>
+          <td>登录</td>
+          <td>2023-06-07T19:30:19</td>
+          <td>0:0:0:0:0:0:0:1</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div id="ZDGL" class="page">
+      <button id="addBill" class="controlButton" onclick="showAddBillForm()">新增账单</button>
+      <table id="tableZDGL">
+        <thead>
+        <tr>
+          <th>账户ID</th>
+          <th>客户ID</th>
+          <th>总金额</th>
+          <th>已支付金额</th>
+          <th>未支付金额</th>
+          <th>支付状态</th>
+          <th>发票地址</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>test</td>
+          <td>test</td>
+          <td>test</td>
+          <td>test</td>
+          <td>test</td>
+          <td>test</td>
+          <td>test</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div id="YHGL" class="page">
+      <button id="addUser" class="controlButton" onclick="showAddUserForm()">新增用户</button>
+      <table id="tableYHGL">
+        <thead>
+        <tr>
+          <th>用户名</th>
+          <th>电话号码</th>
+          <th>工作性质</th>
+          <th>公司部门</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>test</td>
+          <td>test</td>
+          <td>test</td>
+          <td>test</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
 
 <div id="pwdForm">
   <h1>修改密码</h1>
   <div class="input-group">
-    <label for="password">旧密码:</label>
-    <input id="password" type="password">
+    <label for="oldPassword">旧密码:</label>
+    <input id="oldPassword" type="password">
   </div>
   <div class="input-group">
     <label for="newPassword">新密码:</label>
@@ -378,9 +801,56 @@
     <button style="width: 45%;" class="button-container button" onclick="revisePwd()">确定</button>
     <button style="width: 45%;" class="button-container button" onclick="hidePwdForm()">取消</button>
   </div>
-
-
-
+</div>
+<div id="addBillForm">
+  <h1>新增账单</h1>
+  <div class="input-group">
+    <label for="accountId">账户ID:</label>
+    <input id="accountId" type="text">
+    <label for="customerId">客户ID:</label>
+    <input id="customerId" type="text">
+    <label for="totalAmount">总金额:</label>
+    <input id="totalAmount" type="text">
+    <label for="amountPaid">已支付金额:</label>
+    <input id="amountPaid" type="text">
+    <label for="amountDue">未支付金额:</label>
+    <input id="amountDue" type="text">
+    <label for="paymentStatus">支付状态:</label>
+    <input id="paymentStatus" type="text">
+    <label for="billingAddress">发票地址:</label>
+    <input id="billingAddress" type="text">
+  </div>
+  <div style="display: flex; justify-content: space-between;">
+    <button style="width: 45%;" class="button-container button" onclick="addBill()">确定</button>
+    <button style="width: 45%;" class="button-container button" onclick="hideAddBillForm()">取消</button>
+  </div>
+</div>
+<div id="addUserForm">
+  <h1>新增用户</h1>
+  <div class="input-group">
+    <label for="username">用户名：</label>
+    <input id="username" type="text">
+  </div>
+  <div class="input-group">
+    <label for="password">密码：</label>
+    <input id="password" type="password">
+  </div>
+  <div class="input-group">
+    <label for="phone">电话号码：</label>
+    <input id="phone" type="text">
+  </div>
+  <div class="input-group">
+    <label for="workNature">工作性质：</label>
+    <input id="workNature" type="text">
+  </div>
+  <div class="input-group">
+    <label for="companyDep">公司部门：</label>
+    <input id="companyDep" type="text">
+  </div>
+  <div style="display: flex; justify-content: space-between;">
+    <button style="width: 45%;" class="button-container button" onclick="addUser()">确定</button>
+    <button style="width: 45%;" class="button-container button" onclick="hideAddUserForm()">取消</button>
+  </div>
 </div>
 <div id="message"></div>
 <div id="overlay"></div>

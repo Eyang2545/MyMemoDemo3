@@ -48,7 +48,9 @@ public class UserVO {
      */
     private Integer userRole;
 
+    private String workNature;
 
+    private String companyDep;
     /**
      * 创建时间
      */
